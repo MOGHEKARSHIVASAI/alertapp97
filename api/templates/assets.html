@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets.css') }}">
+</head>
+<body class="dark-theme">
+    <div class="container-fluid dashboard-container">
+        <div class="row dashboard-header">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="header-content">
+                    <h1 class="dashboard-title">Asset Management Center</h1>
+                    <p class="dashboard-subtitle text-muted">Comprehensive Overview of Your Assets</p>
+                </div>
+                <div class="header-actions">
+                    <div class="btn-group" role="group">
+                        <a href="{{ url_for('dashboard', filename=filename) }}" 
+                           class="btn btn-primary btn-lg rounded-pill me-3">
+                            <i class="bi bi-speedometer me-2"></i>Dashboard
+                        </a>
+                        <a href="{{ url_for('send_alerts', filename=filename) }}" 
+                           class="btn btn-danger btn-lg rounded-pill">
+                            <i class="bi xi bi-bell-fill me-2"></i>Send Alerts
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-8">
+                <div class="card asset-visualization-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="card-title">Asset Visualization</h3>
+                            <div class="card-header-actions">
+                                <button class="btn btn-sm btn-outline-light me-2">
+                                    <i class="bi bi-download"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-light">
+                                    <i class="bi bi-arrows-fullscreen"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {{ graph_html | safe }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card expiring-assets-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="card-title">Expiring Assets</h3>
+                            <span class="badge bg-danger">{{ expiring_assets.shape[0] }} Soon Expiring</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="asset-list">
+                            {% for asset in expiring_assets.iterrows() %}
+                                <div class="asset-item">
+                                    <div class="asset-info">
+                                        <h6 class="asset-name">{{ asset[1]["Asset"] }}</h6>
+                                        <span class="asset-expiry ci">
+                                            Expires: {{ asset[1]["Expiry Date"].date() }}
+                                        </span>
+                                    </div>
+                                    <div class="asset-actions">
+                                        <span class="badge bg-warning text-dark">
+                                            {{ ((asset[1]["Expiry Date"] - current_time).days) }} days left
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card summary-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Asset Summary</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="summary-item">
+                                    <h4 class="summary-title">Total Assets</h4>
+                                    <p class="summary-value">{{ total_assets }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="summary-item">
+                                    <h4 class="summary-title">Active Assets</h4>
+                                    <p class="summary-value">{{ active_assets }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="summary-item">
+                                    <h4 class="summary-title">Expiring Soon</h4>
+                                    <p class="summary-value">{{ expiring_assets.shape[0] }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="summary-item">
+                                    <h4 class="summary-title">Total Value</h4>
+                                    <p class="summary-value">${{ total_value }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

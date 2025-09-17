@@ -1,0 +1,69 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container {
+    padding: 30px;
+}
+
+.header-row {
+    margin-bottom: 30px;
+}
+
+.dashboard-title {
+    color: #2c3e50;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.insights-row {
+    margin-bottom: 30px;
+}
+
+.insight-card {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.insight-card:hover {
+    transform: scale(1.05);
+}
+
+.insight-card .card-title {
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+}
+
+.insight-value {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.animated-chart-card {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.animated-chart-card:hover {
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: translateY(-10px);
+}
+
+.charts-row {
+    margin-bottom: 30px;
+}
